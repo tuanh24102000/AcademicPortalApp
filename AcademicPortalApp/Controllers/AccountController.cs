@@ -103,7 +103,7 @@ namespace AcademicPortalApp.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        /*public async Task<ActionResult> Register(CreateNewTrainerViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -126,11 +126,11 @@ namespace AcademicPortalApp.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
-        }
+        }*/
 
         //
         // GET: /Account/VerifyCode
-        [AllowAnonymous]
+        /*[AllowAnonymous]*/
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
         {
             // Require that the user has already logged in via username/password or external login

@@ -108,7 +108,7 @@ namespace AcademicPortalApp.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> CreateNewStaff(RegisterViewModel model)
+        public async Task<ActionResult> CreateNewStaff(CreateNewTrainerViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -133,10 +133,12 @@ namespace AcademicPortalApp.Controllers
             return View(model);
         }
         // GET: /Admin/Create new trainer account
-        [Authorize(Roles = "Admin")]
         public ActionResult CreateNewTrainer()
         {
-            return View();
+            CreateNewTrainerViewModel model = new CreateNewTrainerViewModel() {
+                Types = _context.Types.ToList()
+            };
+            return View(model);
         }
 
         //
@@ -144,12 +146,11 @@ namespace AcademicPortalApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> CreateNewTrainer(RegisterViewModel model)
+        public async Task<ActionResult> CreateNewTrainer(CreateNewTrainerViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new Trainer { UserName = model.Email, Email = model.Email, WorkingPlace = model.WorkingPlace, TypeId = model.TypeId, TrainerName= model.TrainerName };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

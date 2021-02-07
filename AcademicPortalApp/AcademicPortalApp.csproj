@@ -321,6 +321,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\RegisterNewTrainer.cshtml" />
     <Content Include="Views\Admin\AllTrainer.cshtml" />
+    <Content Include="Views\Admin\CreateNewTrainer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
