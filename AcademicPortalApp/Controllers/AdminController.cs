@@ -118,22 +118,16 @@ namespace AcademicPortalApp.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
 
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
         // GET: /Admin/Create new trainer account
+        [HttpGet]
+        [Authorize(Roles ="Admin")]
         public ActionResult CreateNewTrainer()
         {
             CreateNewTrainerViewModel model = new CreateNewTrainerViewModel() {
@@ -145,6 +139,7 @@ namespace AcademicPortalApp.Controllers
         //
         // POST: /Admin/Create new trainer account
         [HttpPost]
+        [Authorize(Roles ="Admin")]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateNewTrainer(CreateNewTrainerViewModel model)
@@ -152,25 +147,52 @@ namespace AcademicPortalApp.Controllers
             if (ModelState.IsValid)
             {
                 var user = new Trainer { UserName = model.Email, Email = model.Email, WorkingPlace = model.WorkingPlace, TypeId = model.TypeId, TrainerName= model.TrainerName };
+                
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
+                    var userRole = UserManager.AddToRole(user.Id, "Trainer");
                     return RedirectToAction("AllTrainer");
                 }
                 AddErrors(result);
             }
 
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
-
+        [HttpGet]
+        [Authorize(Roles ="Admin")]
+        public ActionResult EditTrainer(string Id)
+        {
+            var findTrainer = _context.Users.OfType<Trainer>().Include(t => t.Type).SingleOrDefault(t => t.Id == Id);
+            if (findTrainer == null)
+            {
+                return HttpNotFound();
+            }
+            CreateNewTrainerViewModel model = new CreateNewTrainerViewModel()
+            {
+                Id = findTrainer.Id,
+                TrainerName = findTrainer.TrainerName,
+                Email = findTrainer.Email,
+                WorkingPlace = findTrainer.WorkingPlace,
+                Type = findTrainer.Type,
+                Types = _context.Types.ToList()
+            };
+            return View(model);
+        }
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditTrainer(CreateNewTrainerViewModel model)
+        {
+            
+            var findTrainer = _context.Users.OfType<Trainer>().SingleOrDefault(t => t.Id == model.Id);
+            findTrainer.TrainerName = model.TrainerName;
+            findTrainer.TypeId = model.TypeId;
+            findTrainer.WorkingPlace = model.WorkingPlace;
+            _context.SaveChanges();
+            return RedirectToAction("AllTrainer");
+        }
         public ActionResult DeleteTrainer(string Id)
         {
             var findTrainer = _context.Users.SingleOrDefault(t => t.Id == Id);

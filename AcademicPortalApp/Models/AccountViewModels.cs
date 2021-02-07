@@ -83,6 +83,8 @@ namespace AcademicPortalApp.Models
         public string WorkingPlace { get; set; }
         public string TrainerName { get; set; }
         public IEnumerable<Types> Types { get; set; }
+        public Types Type { get; set; }
+        public string Id { get; set; }
     }
 
     public class ResetPasswordViewModel

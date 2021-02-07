@@ -17,7 +17,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var trainer in Model)
+        @foreach (var trainer in Model) 
         {
         <tr>
             <th>@trainer.UserName</th>
@@ -25,7 +25,7 @@
             <td>@trainer.Trainer.WorkingPlace</td>
             <td>@trainer.Trainer.Type.Name.ToString()</td>
             <td>
-                @Html.ActionLink("Edit", "EditTrainer", null, new { @class = "btn btn-success" })
+                @Html.ActionLink("Edit", "EditTrainer", new {Id = trainer.Id }, new { @class = "btn btn-success" })
                 @Html.ActionLink("Delete", "DeleteTrainer", new { Id = trainer.Id}, new { @class = "btn btn-danger" })
             </td>
         </tr>

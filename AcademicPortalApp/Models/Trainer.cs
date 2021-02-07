@@ -7,8 +7,6 @@ namespace AcademicPortalApp.Models
 {
     public class Trainer : ApplicationUser
     {
-        
-
         public string TrainerName { get; set; }
         public int TypeId { get; set; }
         public Types Type { get; set; }
