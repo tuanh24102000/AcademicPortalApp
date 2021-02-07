@@ -82,7 +82,8 @@ namespace AcademicPortalApp.Controllers
                 trainerInfo.Add(new TrainerViewModel()
                 {
                     Trainer = trainer,
-                    UserName = trainer.UserName
+                    UserName = trainer.UserName,
+                    Id = trainer.Id
                 });
             }
 
@@ -154,7 +155,6 @@ namespace AcademicPortalApp.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -162,7 +162,7 @@ namespace AcademicPortalApp.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("AllTrainer");
                 }
                 AddErrors(result);
             }
@@ -171,6 +171,17 @@ namespace AcademicPortalApp.Controllers
             return View(model);
         }
 
+        public ActionResult DeleteTrainer(string Id)
+        {
+            var findTrainer = _context.Users.SingleOrDefault(t => t.Id == Id);
+            if(findTrainer == null)
+            {
+                return HttpNotFound();
+            }
+            _context.Users.Remove(findTrainer);
+            _context.SaveChanges();
+            return RedirectToAction("AllTrainer");
+        }
 
     }
 

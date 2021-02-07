@@ -13,6 +13,7 @@
             <th scope="col">Trainer Name</th>
             <th scope="col">Working Place</th>
             <th scope="col">Trainer Type</th>
+            <th scope="col">Action </th>
         </tr>
     </thead>
     <tbody>
@@ -23,6 +24,10 @@
             <th>@trainer.Trainer.TrainerName</th>
             <td>@trainer.Trainer.WorkingPlace</td>
             <td>@trainer.Trainer.Type.Name.ToString()</td>
+            <td>
+                @Html.ActionLink("Edit", "EditTrainer", null, new { @class = "btn btn-success" })
+                @Html.ActionLink("Delete", "DeleteTrainer", new { Id = trainer.Id}, new { @class = "btn btn-danger" })
+            </td>
         </tr>
         }
     </tbody>
