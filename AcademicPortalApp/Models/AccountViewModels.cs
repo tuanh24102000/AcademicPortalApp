@@ -79,6 +79,21 @@ namespace AcademicPortalApp.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+        public string Age { get; set; }
+        public string DateOfBirth { get; set; }
+        public int TOEICScore { get; set; }
+        public string ExperienceDetails { get; set; }
+        public string Department { get; set; }
+        public string Location { get; set; }
+        public ProgrammingLanguages ProgrammingLanguage { get; set; }
+        public int ProgrammingLanguageId { get; set; }
+        public int TypeId { get; set; }
+        public Types Type { get; set; }
+        public string WorkingPlace { get; set; }
+        public string TrainerName { get; set; }
+        public string TraineeName { get; set; }
+
+
     }
 
     public class ResetPasswordViewModel

@@ -1,5 +1,4 @@
-﻿using System.Data.Entity;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -16,24 +15,5 @@ namespace AcademicPortalApp.Models
             // Add custom user claims here
             return userIdentity;
         }
-    }
-
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
-    {
-        public ApplicationDbContext()
-            : base("Model1", throwIfV1Schema: false)
-        {
-        }
-
-        public static ApplicationDbContext Create()
-        {
-            return new ApplicationDbContext();
-        }
-        public virtual DbSet<Categories> Categories { get; set; }
-        public virtual DbSet<Courses> Courses { get; set; }
-        public virtual DbSet<ProgrammingLanguages> ProgrammingLanguages { get; set; }
-        public virtual DbSet<TraineeCourses> TraineeCourses { get; set; }
-        public virtual DbSet<TrainerCourses> TrainerCourses { get; set; }
-        public virtual DbSet<Types> Types { get; set; }
     }
 }

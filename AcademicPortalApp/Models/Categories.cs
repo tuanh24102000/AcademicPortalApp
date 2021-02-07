@@ -7,6 +7,7 @@ namespace AcademicPortalApp.Models
 {
     public class Categories
     {
+        [Key]
         public int Id { get; set; }
         [Required(ErrorMessage ="Category must be named")]
         public string Name { get; set; }

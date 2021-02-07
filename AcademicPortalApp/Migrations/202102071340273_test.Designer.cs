@@ -7,13 +7,13 @@ namespace AcademicPortalApp.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class InitializeMigration : IMigrationMetadata
+    public sealed partial class test : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitializeMigration));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(test));
         
         string IMigrationMetadata.Id
         {
-            get { return "202101261302594_InitializeMigration"; }
+            get { return "202102071340273_test"; }
         }
         
         string IMigrationMetadata.Source
