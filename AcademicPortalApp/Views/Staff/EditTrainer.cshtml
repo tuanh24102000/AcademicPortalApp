@@ -1,12 +1,12 @@
 ﻿
-@model AcademicPortalApp.Models.CreateNewTrainerViewModel
+@model AcademicPortalApp.Models.TrainerViewModelInStaff
 @{
     ViewBag.Title = "Edit Trainer";
 }
 
 <h2>EditTrainer</h2>
 
-@using (Html.BeginForm("EditTrainer", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("EditTrainer", "Staff", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     <h4>Edit Trainer</h4>

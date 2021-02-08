@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -197,6 +198,62 @@ namespace AcademicPortalApp.Controllers
             _context.Categories.Remove(findCate);
             _context.SaveChanges();
             return RedirectToAction("AllCategory");
+        }
+        //get all trainer
+        public ActionResult AllTrainer()
+        {
+            var allTrainer = _context.Users.OfType<Trainer>().Include(t => t.Type).ToList();
+
+            List<TrainerViewModel> trainerInfo = new List<TrainerViewModel>();
+
+            foreach (var trainer in allTrainer)
+            {
+
+                trainerInfo.Add(new TrainerViewModel()
+                {
+                    Trainer = trainer,
+                    UserName = trainer.UserName,
+                    Id = trainer.Id
+                });
+            }
+
+            return View(trainerInfo);
+        }
+        //GET: /Staff/Edit Trainer
+        [HttpGet]
+        [Authorize(Roles = "Staff")]
+        public ActionResult EditTrainer(string Id)
+        {
+            var findTrainer = _context.Users.OfType<Trainer>().Include(t => t.Type).SingleOrDefault(t => t.Id == Id);
+            if (findTrainer == null)
+            {
+                return HttpNotFound();
+            }
+            TrainerViewModelInStaff model = new TrainerViewModelInStaff()
+            {
+                Id = findTrainer.Id,
+                TrainerName = findTrainer.TrainerName,
+                Email = findTrainer.Email,
+                WorkingPlace = findTrainer.WorkingPlace,
+                Type = findTrainer.Type,
+                Types = _context.Types.ToList()
+            };
+            return View(model);
+        }
+        //POST: /Admin/Edit Trainer
+        [HttpPost]
+        [Authorize(Roles = "Staff")]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditTrainer(TrainerViewModelInStaff model)
+        {
+
+            var findTrainer = _context.Users.OfType<Trainer>().SingleOrDefault(t => t.Id == model.Id);
+            findTrainer.TrainerName = model.TrainerName;
+            findTrainer.TypeId = model.TypeId;
+            findTrainer.WorkingPlace = model.WorkingPlace;
+            _context.SaveChanges();
+            return RedirectToAction("AllTrainer");
         }
     }
 }
