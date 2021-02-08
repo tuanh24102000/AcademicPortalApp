@@ -139,6 +139,49 @@ namespace AcademicPortalApp.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public ActionResult EditStaff(string Id)
+        {
+            var findStaff = _context.Users.OfType<TrainingStaff>().SingleOrDefault(t => t.Id == Id);
+            if (findStaff == null)
+            {
+                return HttpNotFound();
+            }
+            StaffViewModel model = new StaffViewModel()
+            {
+                Id = findStaff.Id,
+                StaffName = findStaff.StaffName,
+                Email = findStaff.Email
+            };
+            return View(model);
+        }
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditStaff(StaffViewModel model)
+        {
+
+            var findStaff = _context.Users.OfType<TrainingStaff>().SingleOrDefault(t => t.Id == model.Id);
+            findStaff.StaffName = model.StaffName;
+            _context.SaveChanges();
+            return RedirectToAction("AllStaff");
+        }
+        [Authorize(Roles = "Admin")]
+        public ActionResult DeleteStaff(string Id)
+        {
+            var findStaff = _context.Users.SingleOrDefault(t => t.Id == Id);
+            if (findStaff == null)
+            {
+                return HttpNotFound();
+            }
+            _context.Users.Remove(findStaff);
+            _context.SaveChanges();
+            return RedirectToAction("AllStaff");
+        }
+
         // GET: /Admin/Create new trainer account
         [HttpGet]
         [Authorize(Roles ="Admin")]
@@ -208,6 +251,7 @@ namespace AcademicPortalApp.Controllers
             _context.SaveChanges();
             return RedirectToAction("AllTrainer");
         }
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteTrainer(string Id)
         {
             var findTrainer = _context.Users.SingleOrDefault(t => t.Id == Id);
