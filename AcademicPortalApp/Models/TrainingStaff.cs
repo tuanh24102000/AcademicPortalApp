@@ -7,5 +7,6 @@ namespace AcademicPortalApp.Models
 {
     public class TrainingStaff : ApplicationUser
     {
+        public string StaffName { get; set; }
     }
 }

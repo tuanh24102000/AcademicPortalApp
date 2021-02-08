@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.EntityFramework;
 namespace AcademicPortalApp.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class AdminController : Controller
     {
         private ApplicationUserManager _userManager;
@@ -90,9 +91,22 @@ namespace AcademicPortalApp.Controllers
             return View(trainerInfo);
         }
         //get all staff
+        [Authorize(Roles ="Admin")]
         public ActionResult AllStaff()
         {
-            return View();
+            var allStaff = _context.Users.OfType<TrainingStaff>().ToList();
+            List<StaffViewModel> staffInfo = new List<StaffViewModel>();
+            foreach( var staff in allStaff)
+            {
+                staffInfo.Add(new StaffViewModel()
+                {
+                    Id = staff.Id,
+                    Email = staff.Email,
+                    StaffName = staff.StaffName
+                }); ;
+            }
+        
+            return View(staffInfo);
         }
         //
         // GET: /Admin/Create new staff
@@ -109,16 +123,16 @@ namespace AcademicPortalApp.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> CreateNewStaff(CreateNewTrainerViewModel model)
+        public async Task<ActionResult> CreateNewStaff(StaffViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new TrainingStaff { UserName = model.Email, Email = model.Email, StaffName = model.StaffName };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    return RedirectToAction("Index", "Home");
+                    UserManager.AddToRole(user.Id, "Staff");
+                    return RedirectToAction("AllStaff");
                 }
                 AddErrors(result);
             }
@@ -161,6 +175,7 @@ namespace AcademicPortalApp.Controllers
         }
         [HttpGet]
         [Authorize(Roles ="Admin")]
+        
         public ActionResult EditTrainer(string Id)
         {
             var findTrainer = _context.Users.OfType<Trainer>().Include(t => t.Type).SingleOrDefault(t => t.Id == Id);

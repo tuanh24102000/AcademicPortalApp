@@ -32,7 +32,7 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.TypeId, new { @class = "col-md-2 control-label" })
-        @Html.DropDownListFor(m => m.TypeId, new SelectList(Model.Types, "Id", "Name",Model.Type.Id), new { @class = "form-control" , @value =Model.Type})
+        @Html.DropDownListFor(m => m.TypeId, new SelectList(Model.Types, "Id", "Name",Model.TypeId), new { @class = "form-control" , @value =Model.Type})
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">

@@ -244,9 +244,14 @@
     <Compile Include="Migrations\202102071340273_test.Designer.cs">
       <DependentUpon>202102071340273_test.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202102080715341_staff.cs" />
+    <Compile Include="Migrations\202102080715341_staff.Designer.cs">
+      <DependentUpon>202102080715341_staff.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\Trainee.cs" />
     <Compile Include="Models\Trainer.cs" />
@@ -306,7 +311,6 @@
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
@@ -319,10 +323,11 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Account\RegisterNewTrainer.cshtml" />
     <Content Include="Views\Admin\AllTrainer.cshtml" />
     <Content Include="Views\Admin\CreateNewTrainer.cshtml" />
     <Content Include="Views\Admin\EditTrainer.cshtml" />
+    <Content Include="Views\Admin\AllStaff.cshtml" />
+    <Content Include="Views\Admin\CreateNewStaff.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -347,6 +352,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202102071340273_test.resx">
       <DependentUpon>202102071340273_test.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102080715341_staff.resx">
+      <DependentUpon>202102080715341_staff.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

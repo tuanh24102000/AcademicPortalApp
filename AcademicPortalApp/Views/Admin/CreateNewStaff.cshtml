@@ -1,14 +1,14 @@
 ﻿
 
-@model AcademicPortalApp.Models.CreateNewTrainerViewModel
+@model AcademicPortalApp.Models.StaffViewModel
 @{
-    ViewBag.Title = "Crate New Trainer";
+    ViewBag.Title = "Crate New Staff";
 }
 
 
-<h2>CreateNewTrainer</h2>
+<h2>CreateNewStaff</h2>
 
-@using (Html.BeginForm("CreateNewTrainer", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("CreateNewStaff", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     <h4>Create a new account.</h4>
@@ -21,20 +21,10 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.WorkingPlace, new { @class = "col-md-2 control-label" })
+        @Html.LabelFor(m => m.StaffName, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.WorkingPlace, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.StaffName, new { @class = "form-control" })
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.TrainerName, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.TrainerName, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.TypeId, new { @class = "col-md-2 control-label" })
-        @Html.DropDownListFor(m => m.TypeId, new SelectList(Model.Types, "Id", "Name"), new { @class = "form-control" })
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
@@ -50,7 +40,7 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Create New Trainer" />
+            <input type="submit" class="btn btn-default" value="Create New Staff" />
         </div>
     </div>
 }
