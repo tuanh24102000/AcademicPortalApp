@@ -64,7 +64,7 @@ namespace AcademicPortalApp.Controllers
                 _userManager = value;
             }
         }
-
+        // get all course
         public ActionResult AllCourse()
         {
             var allCourse = _context.Courses.ToList();
@@ -78,11 +78,10 @@ namespace AcademicPortalApp.Controllers
                     Course = course,
                     Categories = _context.Categories.ToList()
                 });
-
             }
             return View(courseWithCate);
         }
-
+        //GET: /Staff/Create Course
         [Authorize(Roles ="Staff")]
         public ActionResult CreateCourse()
         {
@@ -92,23 +91,19 @@ namespace AcademicPortalApp.Controllers
             };
             return View(selectedcategorylist);
         }
+        //POST: /Staff/Create Course
         [HttpPost]
         [Authorize(Roles = "Staff")]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult CreateCourse(CourseAndCategoryViewModel model)
         {
-           /* var course = new Courses();
-            course.Name = model.Course.Name;
-            course.CategoryId = model.Course.CategoryId;
-            course.Description = model.Course.Description;
-*/
             _context.Courses.Add(model.Course);
             _context.SaveChanges();
 
             return RedirectToAction("AllCourse");
         }
-
+        //GET: /Staff/Edit Course
         [HttpGet]
         [Authorize(Roles = "Staff")]
         public ActionResult EditCourse(int Id)
@@ -120,7 +115,7 @@ namespace AcademicPortalApp.Controllers
             };
             return View(modelInfo);
         }
-
+        //POST: /Staff/Edit Course
         [Authorize(Roles = "Staff")]
         [HttpPost]
         public ActionResult EditCourse(CourseAndCategoryViewModel model)
@@ -145,13 +140,36 @@ namespace AcademicPortalApp.Controllers
             _context.SaveChanges();
             return RedirectToAction("AllCourse");
         }
-
+        // Staff/Delete Course
+        [Authorize(Roles = "Staff")]
         public ActionResult DeleteCourse(int Id)
         {
             var findCourse = _context.Courses.SingleOrDefault(c => c.Id == Id);
             _context.Courses.Remove(findCourse);
             _context.SaveChanges();
             return RedirectToAction("AllCourse");
+        }
+        // get all category
+        [Authorize(Roles = "Staff")]
+        public ActionResult AllCategory()
+        {
+            var allCategory = _context.Categories.ToList();
+            return View(allCategory);
+        }
+        // GET: /Staff/Create Category
+        [Authorize(Roles ="Staff")]
+        public ActionResult CreateCategory()
+        { 
+            return View();
+        }
+        //POST: /Staff/Create Category
+        [HttpPost]
+        [Authorize(Roles = "Staff")]
+        public ActionResult CreateCategory(Categories c)
+        {
+            _context.Categories.Add(c);
+            _context.SaveChanges();
+            return RedirectToAction("AllCategory");
         }
     }
 }

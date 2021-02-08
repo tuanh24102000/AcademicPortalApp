@@ -139,7 +139,7 @@ namespace AcademicPortalApp.Controllers
 
             return View(model);
         }
-
+        // GET: /Admin/Edit staff
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public ActionResult EditStaff(string Id)
@@ -157,6 +157,7 @@ namespace AcademicPortalApp.Controllers
             };
             return View(model);
         }
+        // POST: /Admin/Edit staff
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [AllowAnonymous]
@@ -170,6 +171,7 @@ namespace AcademicPortalApp.Controllers
             return RedirectToAction("AllStaff");
         }
         [Authorize(Roles = "Admin")]
+        // Admin/Delete Staff
         public ActionResult DeleteStaff(string Id)
         {
             var findStaff = _context.Users.SingleOrDefault(t => t.Id == Id);
@@ -216,9 +218,9 @@ namespace AcademicPortalApp.Controllers
 
             return View(model);
         }
+        //Get: /Admin/Edit Trainer
         [HttpGet]
         [Authorize(Roles ="Admin")]
-        
         public ActionResult EditTrainer(string Id)
         {
             var findTrainer = _context.Users.OfType<Trainer>().Include(t => t.Type).SingleOrDefault(t => t.Id == Id);
@@ -237,6 +239,7 @@ namespace AcademicPortalApp.Controllers
             };
             return View(model);
         }
+        //POST: /Admin/Edit Trainer
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [AllowAnonymous]
@@ -251,6 +254,7 @@ namespace AcademicPortalApp.Controllers
             _context.SaveChanges();
             return RedirectToAction("AllTrainer");
         }
+        // Admin/Delete Trainer
         [Authorize(Roles = "Admin")]
         public ActionResult DeleteTrainer(string Id)
         {
