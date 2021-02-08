@@ -255,5 +255,68 @@ namespace AcademicPortalApp.Controllers
             _context.SaveChanges();
             return RedirectToAction("AllTrainer");
         }
+        //get all trainee
+        [Authorize(Roles ="Staff")]
+        public ActionResult AllTrainee()
+        {
+            var allTrainee = _context.Users.OfType<Trainee>().Include(t => t.ProgrammingLanguage).ToList();
+
+            List<TraineeViewModel> traineeInfo = new List<TraineeViewModel>();
+
+            foreach (var trainee in allTrainee)
+            {
+
+                traineeInfo.Add(new TraineeViewModel()
+                {
+                    TraineeName = trainee.TraineeName,
+                    Email = trainee.UserName,
+                    Id = trainee.Id,
+                    Age = trainee.Age,
+                    ProgrammingLanguage = trainee.ProgrammingLanguage,
+                    ProgrammingLanguageId = trainee.ProgrammingLanguageId,
+                    TOEICScore = trainee.TOEICScore,
+                    ExperienceDetails = trainee.ExperienceDetails,
+                    DateOfBirth = trainee.DateOfBirth,
+                    Department = trainee.Department,
+                    Location = trainee.Location
+                });
+            }
+            return View(traineeInfo);
+        }
+        //GET: /Staff/Create Trainee
+        [HttpGet]
+        [Authorize(Roles = "Staff")]
+        public ActionResult CreateTrainee()
+        {
+            TraineeViewModel model = new TraineeViewModel()
+            {
+                ProgrammingLanguages = _context.ProgrammingLanguages.ToList()
+            };
+            return View(model);
+        }
+
+        //
+        // POST: /Admin/Create new trainer account
+        [HttpPost]
+        [Authorize(Roles = "Staff")]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateTrainee(TraineeViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new Trainee { UserName = model.Email, Email = model.Email, DateOfBirth = model.DateOfBirth, ProgrammingLanguageId = model.ProgrammingLanguageId, TraineeName = model.TraineeName, Age = model.Age, Department = model.Department, Location = model.Location, ExperienceDetails = model.ExperienceDetails };
+
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    var userRole = UserManager.AddToRole(user.Id, "Trainee");
+                    return RedirectToAction("AllTrainee");
+                }
+                AddErrors(result);
+            }
+
+            return View(model);
+        }
     }
 }
