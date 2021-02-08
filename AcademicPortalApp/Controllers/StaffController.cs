@@ -294,8 +294,6 @@ namespace AcademicPortalApp.Controllers
             };
             return View(model);
         }
-
-        //
         // POST: /Admin/Create new trainer account
         [HttpPost]
         [Authorize(Roles = "Staff")]
@@ -317,6 +315,64 @@ namespace AcademicPortalApp.Controllers
             }
 
             return View(model);
+        }
+        //Get: /Staff/Edit Trainee
+        [HttpGet]
+        [Authorize(Roles = "Staff")]
+        public ActionResult EditTrainee(string Id)
+        {
+            var findTrainee = _context.Users.OfType<Trainee>().Include(t => t.ProgrammingLanguage).SingleOrDefault(t => t.Id == Id);
+            if (findTrainee == null)
+            {
+                return HttpNotFound();
+            }
+            TraineeViewModel model = new TraineeViewModel()
+            {
+                Id = findTrainee.Id,
+                TraineeName = findTrainee.TraineeName,
+                Email = findTrainee.Email,
+                Age = findTrainee.Age,
+                DateOfBirth = findTrainee.DateOfBirth,
+                TOEICScore = findTrainee.TOEICScore,
+                ExperienceDetails = findTrainee.ExperienceDetails,
+                Department = findTrainee.Department,
+                Location = findTrainee.Location,
+                ProgrammingLanguages = _context.ProgrammingLanguages.ToList()
+            };
+            return View(model);
+        }
+        //POST: /Staff/Edit Trainee
+        [HttpPost]
+        [Authorize(Roles = "Staff")]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditTrainee(TraineeViewModel model)
+        {
+            var findTrainee = _context.Users.OfType<Trainee>().SingleOrDefault(t => t.Id == model.Id);
+            findTrainee.TraineeName = model.TraineeName;
+            findTrainee.Email = model.Email;
+            findTrainee.Age = model.Age;
+            findTrainee.DateOfBirth = model.DateOfBirth;
+            findTrainee.TOEICScore = model.TOEICScore;
+            findTrainee.ExperienceDetails = model.ExperienceDetails;
+            findTrainee.Department = model.Department;
+            findTrainee.Location = model.Location;
+            findTrainee.ProgrammingLanguageId = model.ProgrammingLanguageId;
+            _context.SaveChanges();
+            return RedirectToAction("AllTrainee");
+        }
+        // Staff/DeleteTrainee
+        [Authorize(Roles = "Staff")]
+        public ActionResult DeleteTrainee(string Id)
+        {
+            var findTrainee = _context.Users.SingleOrDefault(t => t.Id == Id);
+            if (findTrainee == null)
+            {
+                return HttpNotFound();
+            }
+            _context.Users.Remove(findTrainee);
+            _context.SaveChanges();
+            return RedirectToAction("AllTrainee");
         }
     }
 }
