@@ -336,6 +336,7 @@
     <Content Include="Views\Staff\EditCourse.cshtml" />
     <Content Include="Views\Staff\CreateCategory.cshtml" />
     <Content Include="Views\Staff\AllCategory.cshtml" />
+    <Content Include="Views\Staff\EditCategory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

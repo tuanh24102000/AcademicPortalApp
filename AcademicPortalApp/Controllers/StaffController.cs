@@ -171,5 +171,32 @@ namespace AcademicPortalApp.Controllers
             _context.SaveChanges();
             return RedirectToAction("AllCategory");
         }
+        //GET: /Staff/Edit Category
+        [Authorize(Roles ="Staff")]
+        public ActionResult EditCategory(int Id)
+        {
+            var cate = _context.Categories.SingleOrDefault(t => t.Id == Id);
+            return View(cate);
+        }
+        //POST: /Staff/Edit Category
+        [HttpPost]
+        [Authorize(Roles ="Staff")]
+        public ActionResult EditCategory(Categories c)
+        {
+            var cateInfo = _context.Categories.SingleOrDefault(t => t.Id == c.Id);
+            cateInfo.Name = c.Name;
+            cateInfo.Description = c.Description;
+            _context.SaveChanges();
+            return RedirectToAction("AllCategory");
+        }
+        // Staff/Delete Category
+        [Authorize(Roles ="Staff")]
+        public ActionResult DeleteCategory(int Id)
+        {
+            var findCate = _context.Categories.SingleOrDefault(t => t.Id == Id);
+            _context.Categories.Remove(findCate);
+            _context.SaveChanges();
+            return RedirectToAction("AllCategory");
+        }
     }
 }
