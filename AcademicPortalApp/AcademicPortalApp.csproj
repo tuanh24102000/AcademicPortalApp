@@ -233,6 +233,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
+    <Compile Include="Controllers\TraineeRelatedController.cs" />
     <Compile Include="Controllers\TrainerRelatedController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
@@ -344,10 +345,12 @@
     <Content Include="Views\Staff\AllTrainee.cshtml" />
     <Content Include="Views\Staff\EditTrainee.cshtml" />
     <Content Include="Views\TrainerRelated\AllCourseOfTrainer.cshtml" />
-    <Content Include="Views\Staff\AssignCourseToTrainer.cshtml" />
+    <Content Include="Views\TrainerRelated\AssignCourseToTrainer.cshtml" />
+    <Content Include="Views\TrainerRelated\ReassignedTrainerToCourse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\TraineeRelated\" />
     <Folder Include="Views\Users\" />
   </ItemGroup>
   <ItemGroup>

@@ -66,12 +66,21 @@ namespace AcademicPortalApp.Models
         public string Id { get; set; }
     }
 
-    public class TrainerCoursesViewModel {
+    public class TrainerCoursesViewModel
+    {
         public string TrainerId { get; set; }
-        public string TrainerUserName { get; set; }
         public IEnumerable<Trainer> Trainers { get; set; }
         public int CourseId { get; set; }
-        public Courses Course { get; set; }
         public IEnumerable<Courses> Courses { get; set; }
+        public TrainerCourses TrainerCourse { get; set; }
     }
+    public class TraineeCourseViewModel
+    {
+        public string TraineeId { get; set; }
+        public IEnumerable<Trainee> Trainees { get; set; }
+        public int CourseId { get; set; }
+        public IEnumerable<Courses> Courses { get; set; }
+        public TraineeCourses TraineeCourse { get; set; }
+    }
+
 }

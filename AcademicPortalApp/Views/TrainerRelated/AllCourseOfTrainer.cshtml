@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AcademicPortalApp.Models.TrainerCoursesViewModel>
+﻿@model IEnumerable<AcademicPortalApp.Models.TrainerCourses>
 @{
     ViewBag.Title = "All Course Of Trainer";
 }
@@ -11,7 +11,6 @@
             <th scope="col">Trainer Id</th>
             <th scope="col">Course Name</th>
             <th scope="col">Course Decription</th>
-            <th scope="col">Category Name</th>
             <th scope="col">Action</th>
         </tr>
     </thead>
@@ -19,16 +18,16 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td scope="row">@item.TrainerId</td>
+                <td scope="row">@item.Trainer.UserName</td>
                 <td>@item.Course.Name</td>
                 <td>@item.Course.Description</td>
-                <td>@item.Course.Category.Name</td>
                 <td>
-                    @Html.ActionLink("Reassign", "ReassignedTrainerToCourse", new { Id = item.TrainerId }, new { @class = "btn btn-success" })
-                    @Html.ActionLink("Remove", "RemoveTrainerFromCourse", new { Id = item.TrainerId }, new { @class = "btn btn-danger" })
+                    @Html.ActionLink("Reassign", "ReassignedTrainerToCourse", new { Id = item.Id }, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Remove", "RemoveTrainerFromCourse", new { Id = item.Id }, new { @class = "btn btn-danger" })
                 </td>
             </tr>
         }
     </tbody>
+    @Html.ActionLink("Assign", "AssignCourseToTrainer", null, new { @class = "btn btn-primary" })
 </table>
 

@@ -22,22 +22,75 @@ namespace AcademicPortalApp.Controllers
         public ActionResult AllCourseOfTrainer(string trainerId)
         {
             var allCoursesOfTrainer = _context.TrainerCourses
-                .Where(t => t.TrainerId == trainerId)
-                .Select(t => t.Course)
-                .Include(t => t.Category).ToList();
-
-            List<TrainerCoursesViewModel> courseWithTrainerId = new List<TrainerCoursesViewModel>();
-
-            foreach (var item in allCoursesOfTrainer)
+                .Where(t => t.TrainerId == trainerId).Include(t => t.Trainer).Include(t => t.Course).ToList();
+            return View(allCoursesOfTrainer);
+        }
+        // find trainer course by id and assign trainerid for redirect to all trainer course then remove trainer course had been found
+        [HttpGet]
+        [Authorize(Roles = "Staff")]
+        public ActionResult RemoveTrainerFromCourse(int Id)
+        {
+            var findTrainerCourse = _context.TrainerCourses.SingleOrDefault(t => t.Id == Id);
+            var trainerId = findTrainerCourse.TrainerId;
+            _context.TrainerCourses.Remove(findTrainerCourse);
+            _context.SaveChanges();
+            return RedirectToAction("AllCourseOfTrainer", "TrainerRelated", new { trainerId = trainerId });
+        }
+        //GET: Staff/Assign Course to trainer: return :select trainer and course view model to view 
+        [HttpGet]
+        [Authorize(Roles = "Staff")]
+        public ActionResult AssignCourseToTrainer()
+        {
+            var viewModel = new TrainerCoursesViewModel()
             {
-                courseWithTrainerId.Add(new TrainerCoursesViewModel()
-                {
-                    TrainerId = trainerId,
-                    Course = item
-                });
-            }
+                Trainers = _context.Users.OfType<Trainer>().ToList(),
+                Courses = _context.Courses.ToList()
+            };
 
-            return View(courseWithTrainerId);
+            return View(viewModel);
+        }
+        //POST: Staff/ receive trainerid and courseid from viewmodel to create new trainer course and redirect to all trainer course page 
+        [HttpPost]
+        [Authorize(Roles = "Staff")]
+        public ActionResult AssignCourseToTrainer(TrainerCoursesViewModel model)
+        {
+            var trainerCourse = new TrainerCourses()
+            {
+                TrainerId = model.TrainerId,
+                CourseId = model.CourseId
+            };
+
+            _context.TrainerCourses.Add(trainerCourse);
+            _context.SaveChanges();
+
+            return RedirectToAction("AllCourseOfTrainer", "TrainerRelated", new { trainerId = model.TrainerId });
+        }
+        //GET: Staff/ find trainer course by id and trainer id and create a new view model of trainer course to return trainer course, list of course and trainer id
+        [HttpGet]
+        [Authorize(Roles = "Staff")]
+        public ActionResult ReassignedTrainerToCourse(int Id)
+        {
+            var trainerCourse = _context.TrainerCourses.SingleOrDefault(t => t.Id == Id);
+            var trainerId = trainerCourse.TrainerId;
+            TrainerCoursesViewModel model = new TrainerCoursesViewModel
+            {
+                TrainerCourse = trainerCourse,
+                Courses = _context.Courses.ToList(),
+                TrainerId = trainerId
+            };
+
+            return View(model);
+        }
+        //POST: Staff/ find trainer course by trainer course by id and change courseid that receive from view model
+        [HttpPost]
+        [Authorize(Roles = "Staff")]
+        public ActionResult ReassignedTrainerToCourse(TrainerCoursesViewModel model)
+        {
+            var trainerCourse = _context.TrainerCourses.SingleOrDefault(t => t.Id == model.TrainerCourse.Id);
+            trainerCourse.CourseId = model.TrainerCourse.CourseId;
+            _context.SaveChanges();
+
+           return RedirectToAction("AllCourseOfTrainer", "TrainerRelated", new { trainerId = model.TrainerId });
         }
     }
 }

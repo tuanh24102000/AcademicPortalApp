@@ -374,34 +374,5 @@ namespace AcademicPortalApp.Controllers
             _context.SaveChanges();
             return RedirectToAction("AllTrainee");
         }
-
-        [HttpGet]
-        [Authorize(Roles = "Staff")]
-        public ActionResult AssignCourseToTrainer()
-        {
-            var viewModel = new TrainerCoursesViewModel()
-            {
-                Trainers = _context.Users.OfType<Trainer>().ToList(),
-                Courses = _context.Courses.ToList()
-            };
-
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Authorize(Roles = "Staff")]
-        public ActionResult AssignCourseToTrainer(TrainerCoursesViewModel model)
-        {
-            var trainerCourse = new TrainerCourses()
-            {
-                TrainerId = model.TrainerId,
-                CourseId = model.Course.Id
-            };
-
-            _context.TrainerCourses.Add(trainerCourse);
-            _context.SaveChanges();
-
-            return RedirectToAction("AllCourseOfTrainer", "TrainerRelated", new { trainerId = model.TrainerId});
-        }
     }
 }
