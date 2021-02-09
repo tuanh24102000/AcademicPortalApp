@@ -347,10 +347,12 @@
     <Content Include="Views\TrainerRelated\AllCourseOfTrainer.cshtml" />
     <Content Include="Views\TrainerRelated\AssignCourseToTrainer.cshtml" />
     <Content Include="Views\TrainerRelated\ReassignedTrainerToCourse.cshtml" />
+    <Content Include="Views\TraineeRelated\AllCourseOfTrainee.cshtml" />
+    <Content Include="Views\TraineeRelated\AssignCourseToTrainee.cshtml" />
+    <Content Include="Views\TraineeRelated\ReassignedTraineeToCourse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\TraineeRelated\" />
     <Folder Include="Views\Users\" />
   </ItemGroup>
   <ItemGroup>
