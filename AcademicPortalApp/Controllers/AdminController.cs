@@ -65,11 +65,6 @@ namespace AcademicPortalApp.Controllers
                 _userManager = value;
             }
         }
-        // GET: Admin
-        public ActionResult Index()
-        {
-            return View();
-        }
         //get all trainer by Discriminator Trainer
         public ActionResult AllTrainer()
         {
@@ -116,7 +111,6 @@ namespace AcademicPortalApp.Controllers
         {
             return View();
         }
-
         //
         // POST: /Admin/Create new staff account
         [HttpPost]
@@ -183,7 +177,6 @@ namespace AcademicPortalApp.Controllers
             _context.SaveChanges();
             return RedirectToAction("AllStaff");
         }
-
         // GET: /Admin/Create new trainer account
         [HttpGet]
         [Authorize(Roles ="Admin")]
@@ -194,7 +187,6 @@ namespace AcademicPortalApp.Controllers
             };
             return View(model);
         }
-
         //
         // POST: /Admin/Create new trainer account
         [HttpPost]

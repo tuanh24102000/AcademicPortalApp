@@ -16,7 +16,7 @@ namespace AcademicPortalApp.Controllers
         {
             _context = new ApplicationDbContext();
         }
-        // GET: TrainerRelated
+        // Get all Trainer Course by trainerId, included trainer and course 
         [HttpGet]
         [Authorize(Roles = "Staff")]
         public ActionResult AllCourseOfTrainer(string trainerId)
@@ -36,7 +36,7 @@ namespace AcademicPortalApp.Controllers
             _context.SaveChanges();
             return RedirectToAction("AllCourseOfTrainer", "TrainerRelated", new { trainerId = trainerId });
         }
-        //GET: Staff/Assign Course to trainer: return :select trainer and course view model to view 
+        //GET: Staff/Assign Course to trainer: return :select trainer and course view model to view     
         [HttpGet]
         [Authorize(Roles = "Staff")]
         public ActionResult AssignCourseToTrainer()
@@ -81,7 +81,7 @@ namespace AcademicPortalApp.Controllers
 
             return View(model);
         }
-        //POST: Staff/ find trainer course by trainer course by id and change courseid that receive from view model
+        //POST: Staff/ find trainer course by trainer course id and change courseid that receive from view model
         [HttpPost]
         [Authorize(Roles = "Staff")]
         public ActionResult ReassignedTrainerToCourse(TrainerCoursesViewModel model)

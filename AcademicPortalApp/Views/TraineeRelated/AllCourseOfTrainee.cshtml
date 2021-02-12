@@ -20,7 +20,7 @@
             <tr>
                 <td scope="row">@item.Trainee.UserName</td>
                 <td>@item.Course.Name</td>
-                <td>@item.Course.Description</td>   
+                <td>@item.Course.Description</td>
                 <td>
                     @Html.ActionLink("Reassign", "ReassignedTraineeToCourse", new { Id = item.Id }, new { @class = "btn btn-success" })
                     @Html.ActionLink("Remove", "RemoveTraineeFromCourse", new { Id = item.Id }, new { @class = "btn btn-danger" })

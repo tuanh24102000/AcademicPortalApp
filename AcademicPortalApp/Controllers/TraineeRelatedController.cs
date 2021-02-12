@@ -15,7 +15,7 @@ namespace AcademicPortalApp.Controllers
         {
             _context = new ApplicationDbContext();
         }
-        // GET: TraineeRelated
+        // Get all Trainee Course by traineeId, included trainee and course 
         [HttpGet]
         [Authorize(Roles = "Staff")]
         public ActionResult AllCourseOfTrainee(string traineeId)
@@ -34,7 +34,6 @@ namespace AcademicPortalApp.Controllers
                 Trainees = _context.Users.OfType<Trainee>().ToList(),
                 Courses = _context.Courses.ToList()
             };
-
             return View(viewModel);
         }
         //POST: Staff/ receive traineeid and courseid from viewmodel to create new trainee course and redirect to all trainee course page 
@@ -47,7 +46,6 @@ namespace AcademicPortalApp.Controllers
                 TraineeId = model.TraineeId,
                 CourseId = model.CourseId
             };
-
             _context.TraineeCourses.Add(traineeCourses);
             _context.SaveChanges();
 
@@ -80,7 +78,7 @@ namespace AcademicPortalApp.Controllers
 
             return View(model);
         }
-        //POST: Staff/ find trainee course by trainee course by id and change courseid that receive from view model
+        //POST: Staff/ find trainee course by trainee course id and change courseid that receive from view model
         [HttpPost]
         [Authorize(Roles = "Staff")]
         public ActionResult ReassignedTraineeToCourse(TraineeCourseViewModel model)
