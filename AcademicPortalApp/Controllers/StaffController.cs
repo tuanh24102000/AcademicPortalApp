@@ -65,7 +65,7 @@ namespace AcademicPortalApp.Controllers
                 _userManager = value;
             }
         }
-        // get all course
+        // get all course and search course by name
         public ActionResult AllCourse(string name)
         {
             if (String.IsNullOrWhiteSpace(name))
@@ -142,7 +142,7 @@ namespace AcademicPortalApp.Controllers
             _context.SaveChanges();
             return RedirectToAction("AllCourse");
         }
-        // get all category
+        // get all category and search by category name
         [Authorize(Roles = "Staff")]
         public ActionResult AllCategory(string cateName)
         {
@@ -250,7 +250,7 @@ namespace AcademicPortalApp.Controllers
             _context.SaveChanges();
             return RedirectToAction("AllTrainer");
         }
-        //get all trainee
+        //get all trainee and search trainee infomation
         [Authorize(Roles ="Staff")]
         public ActionResult AllTrainee(string traineeName)
         {

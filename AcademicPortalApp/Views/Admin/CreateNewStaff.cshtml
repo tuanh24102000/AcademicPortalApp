@@ -1,12 +1,10 @@
 ﻿
-
 @model AcademicPortalApp.Models.StaffViewModel
 @{
     ViewBag.Title = "Crate New Staff";
 }
 
-
-<h2>CreateNewStaff</h2>
+<h2>Create New Staff</h2>
 
 @using (Html.BeginForm("CreateNewStaff", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {

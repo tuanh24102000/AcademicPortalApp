@@ -269,6 +269,7 @@
     <Compile Include="Models\TrainerViewModel.cs" />
     <Compile Include="Models\TrainingStaff.cs" />
     <Compile Include="Models\Types.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -350,10 +351,11 @@
     <Content Include="Views\TraineeRelated\AllCourseOfTrainee.cshtml" />
     <Content Include="Views\TraineeRelated\AssignCourseToTrainee.cshtml" />
     <Content Include="Views\TraineeRelated\ReassignedTraineeToCourse.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Users\ViewAllCourse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Users\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

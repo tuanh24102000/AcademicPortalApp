@@ -1,12 +1,10 @@
 ﻿
-
 @model AcademicPortalApp.Models.TraineeViewModel
 @{
     ViewBag.Title = "Crate New Trainee";
 }
 
-
-<h2>CreateNewTrainee</h2>
+<h2>Create New Trainee</h2>
 
 @using (Html.BeginForm("CreateTrainee", "Staff", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
@@ -80,6 +78,7 @@
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
+            @Html.ActionLink("Back", "AllTrainee", "Staff", null, new { @class = "btn btn-default" })
             <input type="submit" class="btn btn-default" value="Create New Trainee" />
         </div>
     </div>
