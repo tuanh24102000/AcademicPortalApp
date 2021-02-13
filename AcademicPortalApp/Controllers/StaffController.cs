@@ -72,7 +72,7 @@ namespace AcademicPortalApp.Controllers
             {
                 return View(_context.Courses.Include(t => t.Category).ToList());
             }
-            return View(_context.Courses.Where(t => t.Name == name).Include(t => t.Category).ToList());
+            return View(_context.Courses.Where(t => t.Name.Contains(name)).Include(t => t.Category).ToList());
         }
         //GET: /Staff/Create Course
         [Authorize(Roles ="Staff")]
@@ -284,7 +284,7 @@ namespace AcademicPortalApp.Controllers
             else
             {
                 allTrainee = _context.Users.OfType<Trainee>()
-                    .Where(trainee => trainee.TraineeName == traineeName)
+                    .Where(trainee => trainee.TraineeName.Contains(traineeName))
                     .Include(t => t.ProgrammingLanguage).ToList();
 
                 foreach (var trainee in allTrainee)
@@ -395,6 +395,7 @@ namespace AcademicPortalApp.Controllers
             {
                 return HttpNotFound();
             }
+            _context.TraineeCourses.RemoveRange(_context.TraineeCourses.Where(t => t.TraineeId == Id));
             _context.Users.Remove(findTrainee);
             _context.SaveChanges();
             return RedirectToAction("AllTrainee");

@@ -38,7 +38,6 @@ namespace AcademicPortalApp.Controllers
                         TrainerCourse = trainerCourse
                     });
                 }
-
                 return View(userCourse);
             }
             else if(User.IsInRole("Trainee"))

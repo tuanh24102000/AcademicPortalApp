@@ -1,3 +1,31 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Home Page";
+}
+
+@if (!Request.IsAuthenticated)
+{
+    <p>User is not Logged In</p>
+}
+
+@if (User.IsInRole("Admin"))
+{
+    <p>Welcome Admin</p>
+}
+
+@if (User.IsInRole("Staff"))
+{
+    <p>Welcome Staff</p>
+}
+
+
+@if (User.IsInRole("Trainer"))
+{
+    <p>Welcome Trainer</p>
+}
+
+
+@if (User.IsInRole("Trainee"))
+{
+    <p>Welcome Trainee</p>
 }
