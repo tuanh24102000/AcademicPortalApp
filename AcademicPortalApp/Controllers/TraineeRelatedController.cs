@@ -41,15 +41,31 @@ namespace AcademicPortalApp.Controllers
         [Authorize(Roles = "Staff")]
         public ActionResult AssignCourseToTrainee(TraineeCourseViewModel model)
         {
-            var traineeCourses = new TraineeCourses()
+            var IfCourseExist = _context.TraineeCourses.SingleOrDefault(t => t.TraineeId == model.TraineeId && t.CourseId == model.CourseId);
+            if(IfCourseExist != null)
             {
-                TraineeId = model.TraineeId,
-                CourseId = model.CourseId
-            };
-            _context.TraineeCourses.Add(traineeCourses);
-            _context.SaveChanges();
+                var viewModel = new TraineeCourseViewModel()
+                {
+                    Trainees = _context.Users.OfType<Trainee>().ToList(),
+                    Courses = _context.Courses.ToList()
 
-            return RedirectToAction("AllCourseOfTrainee", "TraineeRelated", new { traineeId = model.TraineeId });
+                };
+                ViewBag.message = "This Course had been assigned to this trainee";
+                return View(viewModel);
+            }
+            else
+            {
+                var traineeCourses = new TraineeCourses()
+                {
+                    TraineeId = model.TraineeId,
+                    CourseId = model.CourseId
+                };
+                _context.TraineeCourses.Add(traineeCourses);
+                _context.SaveChanges();
+
+                return RedirectToAction("AllCourseOfTrainee", "TraineeRelated", new { traineeId = model.TraineeId });
+            }
+
         }
         // find trainee course by id and assign traineeid for redirect to all trainee course then remove trainee course had been found
         [HttpGet]

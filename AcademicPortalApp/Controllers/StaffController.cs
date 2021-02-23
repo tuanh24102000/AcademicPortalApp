@@ -82,7 +82,7 @@ namespace AcademicPortalApp.Controllers
             {
                 Categories = _context.Categories.ToList()
             };
-            return View(selectedcategorylist);
+            return View(selectedcategorylist);  
         }
         //POST: /Staff/Create Course
         [HttpPost]
@@ -91,10 +91,24 @@ namespace AcademicPortalApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateCourse(CourseAndCategoryViewModel model)
         {
-            _context.Courses.Add(model.Course);
-            _context.SaveChanges();
+            var IfCourseExist = _context.Courses.SingleOrDefault(t => t.Name == model.Course.Name);
+            if(IfCourseExist != null)
+            {
+                var selectedcategorylist = new CourseAndCategoryViewModel()
+                {
+                    Categories = _context.Categories.ToList()
+                };
+                ViewBag.message = "This Course had been created";
+                return View(selectedcategorylist);
+            }
+            else
+            {
+                _context.Courses.Add(model.Course);
+                _context.SaveChanges();
 
-            return RedirectToAction("AllCourse");
+                return RedirectToAction("AllCourse");
+            }
+     
         }
         //GET: /Staff/Edit Course
         [HttpGet]
@@ -163,9 +177,18 @@ namespace AcademicPortalApp.Controllers
         [Authorize(Roles = "Staff")]
         public ActionResult CreateCategory(Categories c)
         {
-            _context.Categories.Add(c);
-            _context.SaveChanges();
-            return RedirectToAction("AllCategory");
+            var IfCategoryExist = _context.Categories.SingleOrDefault(t => t.Name == c.Name);
+            if (IfCategoryExist != null)
+            {
+                ViewBag.message = "This Category had been created!";
+                return View();
+            }
+            else
+            {
+                _context.Categories.Add(c);
+                _context.SaveChanges();
+                return RedirectToAction("AllCategory");
+            }
         }
         //GET: /Staff/Edit Category
         [Authorize(Roles ="Staff")]

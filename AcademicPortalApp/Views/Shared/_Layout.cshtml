@@ -6,7 +6,6 @@
     <title>@ViewBag.Title - Academic Portal Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -33,12 +32,13 @@
                         <li>@Html.ActionLink("All Trainer", "AllTrainer", "Staff")</li>
                         <li>@Html.ActionLink("All Trainee", "AllTrainee", "Staff")</li>
                     }
-                    @if(Request.IsAuthenticated && User.IsInRole("Trainer") || User.IsInRole("Trainee"))
+                    @if (Request.IsAuthenticated && User.IsInRole("Trainer") || User.IsInRole("Trainee"))
                     {
                         <li>@Html.ActionLink("All Related Courses", "Index", "Users")</li>
                     }
-                    @if (Request.IsAuthenticated && User.IsInRole("Trainee")) { 
-                <li>@Html.ActionLink("All Courses", "ViewAllCourse", "Users")</li>
+                    @if (Request.IsAuthenticated && User.IsInRole("Trainee"))
+                    {
+                        <li>@Html.ActionLink("All Courses", "ViewAllCourse", "Users")</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -52,7 +52,6 @@
             <p>&copy; @DateTime.Now.Year - Academic Portal Application</p>
         </footer>
     </div>
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

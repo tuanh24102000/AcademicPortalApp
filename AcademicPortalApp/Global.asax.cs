@@ -1,10 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using AcademicPortalApp.Models;
+using AcademicPortalApp.Migrations;
+using System.Data.Entity.Migrations;
 
 namespace AcademicPortalApp
 {
@@ -16,6 +20,7 @@ namespace AcademicPortalApp
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-        }
+            /*Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext, Configuration>());
+            DbContext.Database.Initialize(true);*/        }
     }
 }

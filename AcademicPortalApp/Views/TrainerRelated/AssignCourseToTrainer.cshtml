@@ -2,7 +2,10 @@
 @{
     ViewBag.Title = "AssignCourseToTrainer";
 }
-
+@if(ViewBag.message != null)
+{
+    <p class="text text-danger">@ViewBag.message</p>
+}
 <h2>Assign Course To Trainer</h2>
 
 @using (Html.BeginForm("AssignCourseToTrainer", "TrainerRelated", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -26,9 +29,3 @@
         </div>
     </div>
 }
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
-
-

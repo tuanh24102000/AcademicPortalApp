@@ -1,12 +1,14 @@
 ﻿using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity;
+
 
 namespace AcademicPortalApp.Models
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("Model5", throwIfV1Schema: false)
+            : base("DbConnection", throwIfV1Schema: false)
         {
         }
         public DbSet<Categories> Categories { get; set; }
@@ -18,6 +20,6 @@ namespace AcademicPortalApp.Models
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
-        }   
+        }
     }
 }

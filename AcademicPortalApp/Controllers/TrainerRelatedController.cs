@@ -54,16 +54,30 @@ namespace AcademicPortalApp.Controllers
         [Authorize(Roles = "Staff")]
         public ActionResult AssignCourseToTrainer(TrainerCoursesViewModel model)
         {
-            var trainerCourse = new TrainerCourses()
+            var IfCourseExist = _context.TrainerCourses.SingleOrDefault(t => t.TrainerId == model.TrainerId && t.CourseId == model.CourseId);
+            if (IfCourseExist != null)
             {
-                TrainerId = model.TrainerId,
-                CourseId = model.CourseId
-            };
+                var viewModel = new TrainerCoursesViewModel()
+                {
+                    Trainers = _context.Users.OfType<Trainer>().ToList(),
+                    Courses = _context.Courses.ToList()
 
-            _context.TrainerCourses.Add(trainerCourse);
-            _context.SaveChanges();
+                };
+                ViewBag.message = "This Course had been assigned to this trainer";
+                return View(viewModel);
+            }
+            else
+            {
+                var trainerCourses = new TrainerCourses()
+                {
+                    TrainerId = model.TrainerId,
+                    CourseId = model.CourseId
+                };
+                _context.TrainerCourses.Add(trainerCourses);
+                _context.SaveChanges();
 
-            return RedirectToAction("AllCourseOfTrainer", "TrainerRelated", new { trainerId = model.TrainerId });
+                return RedirectToAction("AllCourseOfTrainer", "TrainerRelated", new { trainerId = model.TrainerId });
+            }
         }
         //GET: Staff/ find trainer course by id and trainer id and create a new view model of trainer course to return trainer course, list of course and trainer id
         [HttpGet]

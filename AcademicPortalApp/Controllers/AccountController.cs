@@ -92,7 +92,7 @@ namespace AcademicPortalApp.Controllers
             }
         }
         [AllowAnonymous]
-        public ActionResult Register()
+        /*public ActionResult Register()
         {
             return View();
         }
@@ -100,7 +100,23 @@ namespace AcademicPortalApp.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new Admin { UserName = model.Email, Email = model.Email};
+
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    var userRole = UserManager.AddToRole(user.Id, "Admin");
+                    return RedirectToAction("Index", "Home");
+                }
+                AddErrors(result);
+            }
+
+            return View(model);
+        }*/
 
         // GET: /Account/VerifyCode
         /*[AllowAnonymous]*/
