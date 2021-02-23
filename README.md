@@ -1,0 +1,13 @@
+# AcademicPortalApp
+Admin role
+  email: admin@admin.com
+  pass: Admin@123
+Staff role
+  email: staff1@staff.com
+  pass: Abc@123
+Trainer role
+  email: trainer@trainer.com
+  pass: Abc@123
+Trainee role
+  email: trainee@trainee.com
+  pass: Abc@123
